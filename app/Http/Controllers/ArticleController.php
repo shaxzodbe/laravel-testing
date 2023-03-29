@@ -16,7 +16,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::orderBy('created_at', 'desc')->paginate(10);
+        $articles = Article::orderBy('updated_at', 'desc')->paginate(10);
 
         return view('articles.index', compact('articles'));
     }
@@ -44,7 +44,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        return view('articles.index', compact('article'));
+        return view('articles.show', compact('article'));
     }
 
     /**
@@ -68,7 +68,7 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Article $article): RedirectResponse
+    public function destroy(Article $article)
     {
         $article->delete();
 

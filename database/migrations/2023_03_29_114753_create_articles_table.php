@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('body');
-            $table->string('slug');
+            $table->string('slug')->nullable();
             $table->string('comments')->comment('Comments added by users')->nullable();
             $table->timestamps();
         });
