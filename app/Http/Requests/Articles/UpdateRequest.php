@@ -11,7 +11,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,8 +24,8 @@ class UpdateRequest extends FormRequest
         return [
             'title' => ['string', 'max:100', 'required'],
             'body' => ['string', 'max:255', 'required'],
-            'slug' => ['string', 'max:100', 'required'],
-            'comments' => ['text', 'max:1000']
+            'comments' => ['string', 'max:1000'],
+            'slug' => ['string', 'max:100'],
         ];
     }
 }

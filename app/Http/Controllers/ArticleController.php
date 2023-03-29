@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Articles\StoreRequest;
+use App\Http\Requests\Articles\UpdateRequest;
 use App\Models\Article;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -57,7 +58,7 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Article $article): RedirectResponse
+    public function update(UpdateRequest $request, Article $article)
     {
         $article->update($request->validated());
 

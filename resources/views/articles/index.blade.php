@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="relative overflow-x-auto">
-                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-auto">
                             <thead
                                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
@@ -28,6 +28,9 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Slug
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Actions
                                 </th>
                             </tr>
                             </thead>
@@ -48,9 +51,20 @@
                                         {{ $article->comments }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        <a href="{{ $article->slug }}">{{ $article->slug }}</a>
+                                        <a href="{{ $article->slug }}" class="visited:text-purple-600">{{ $article->slug }}</a>
                                     </td>
-
+                                    <td class="px-2 py-2">
+                                        <x-link href="{{ route('articles.edit', $article) }}">Edit</x-link>
+                                        <form method="POST" action="{{ route('articles.destroy', $article) }}" class="inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-danger-button
+                                                type="submit"
+                                                onclick="return confirm('Are you sure?')">Delete
+                                            </x-danger-button>
+                                        </form>
+                                        <x-link href="{{ route('articles.update', $article) }}">Update</x-link>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
