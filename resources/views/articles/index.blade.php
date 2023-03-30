@@ -46,7 +46,7 @@
                                         {{ $article->title }}
                                     </th>
                                     <td class="px-6 py-4">
-                                        {{ Str::limit($article->body, 40) }}
+                                        {{ Str::limit($article->body, 20) }}
                                     </td>
                                     <td class="px-6 py-4">
                                         {{ $article->comments }}
@@ -58,7 +58,7 @@
                                     <td class="px-2 py-2">
                                         <x-link href="{{ route('articles.edit', $article) }}">Edit</x-link>
                                         <form method="POST" action="{{ route('articles.destroy', $article) }}"
-                                              class="inline-block">
+                                              style="display: inline-block">
                                             @csrf
                                             @method('DELETE')
                                             <x-danger-button
