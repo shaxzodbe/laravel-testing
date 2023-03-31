@@ -35,4 +35,22 @@ class ArticleTest extends TestCase
 
         $response->assertDontSee(__("Data does not exist!"));
     }
+
+    public function test_add_new_article_working_successfully()
+    {
+        $user = User::factory()->create();
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+        $this->get('/articles/create');
+        $response =  $this->post('articles/create', [
+            'title' => 'qwer',
+            'body' => 'qwer',
+            'comments' => 'qwer',
+            'slug' => 'qwer'
+        ]);
+
+        $response->assertSee('qwer', 'article');
+    }
 }
