@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('articles', \App\Http\Controllers\ArticleController::class);
+    Route::resource('products', \App\Http\Controllers\ProductController::class);
 });
 
 Route::get('/dashboard', function () {
