@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Articles\StoreRequest;
 use App\Http\Requests\Articles\UpdateRequest;
 use App\Models\Article;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 
 class ArticleController extends Controller
 {

@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ArticleTest extends TestCase
@@ -24,7 +23,7 @@ class ArticleTest extends TestCase
         $response = $this->get('/articles');
 
         $response->assertStatus(200);
-        $response->assertSee(__("Data does not exist!"));
+        $response->assertSee(__('Data does not exist!'));
     }
 
     public function test_articles_page_contains_data()
@@ -33,7 +32,7 @@ class ArticleTest extends TestCase
 
         $response = $this->get('/articles');
 
-        $response->assertDontSee(__("Data does not exist!"));
+        $response->assertDontSee(__('Data does not exist!'));
     }
 
     public function test_add_new_article_working_successfully()
@@ -44,13 +43,33 @@ class ArticleTest extends TestCase
             'password' => 'password',
         ]);
         $this->get('/articles/create');
-        $response =  $this->post('articles/create', [
+        $response = $this->post('articles/create', [
             'title' => 'qwer',
             'body' => 'qwer',
             'comments' => 'qwer',
-            'slug' => 'qwer'
+            'slug' => 'qwer',
         ]);
 
-        $response->assertSee('qwer', 'article');
+        $response->assertSee('qwer');
+    }
+
+    public function test_articles_updated_successfully()
+    {
+        $user = User::factory()->create();
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+        Article::factory()->create();
+
+        $this->get('/articles/create');
+        $response = $this->post('articles/create', [
+            'title' => 'qwer',
+            'body' => 'qwer',
+            'comments' => 'qwer',
+            'slug' => 'qwer',
+        ]);
+
+        $response->assertSee('qwer');
     }
 }

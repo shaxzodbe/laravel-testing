@@ -19,6 +19,7 @@ class ArticleFactory extends Factory
     {
         $title = $this->faker->words(2, true);
         $slug = Str::slug($title);
+
         return [
             'title' => $title,
             'body' => $this->faker->text(100),
