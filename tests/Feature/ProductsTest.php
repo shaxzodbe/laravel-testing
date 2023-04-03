@@ -15,9 +15,9 @@ class ProductsTest extends TestCase
 
     public function test_paginated_articles_table_doesnt_contain_11th_record()
     {
+        $user = User::factory()->create();
         $products = Product::factory(11)->create();
         $lastProduct = $products->last();
-        $user = User::factory()->create();
 
         $response = $this->actingAs($user)->get('products');
 

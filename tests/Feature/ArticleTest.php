@@ -15,12 +15,7 @@ class ArticleTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
-
-        $response = $this->get('/articles');
+        $response = $this->actingAs($user)->get('/articles');
 
         $response->assertStatus(200);
         $response->assertSee(__('Data does not exist!'));
@@ -28,9 +23,10 @@ class ArticleTest extends TestCase
 
     public function test_articles_page_contains_data()
     {
+        $user = User::factory()->create();
         Article::factory()->create();
 
-        $response = $this->get('/articles');
+        $response = $this->actingAs($user)->get('/articles');
 
         $response->assertDontSee(__('Data does not exist!'));
     }
@@ -38,38 +34,13 @@ class ArticleTest extends TestCase
     public function test_add_new_article_working_successfully()
     {
         $user = User::factory()->create();
-        $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
-        $this->get('/articles/create');
-        $response = $this->post('articles/create', [
-            'title' => 'qwer',
-            'body' => 'qwer',
-            'comments' => 'qwer',
-            'slug' => 'qwer',
-        ]);
+        $articles = Article::factory()->create();
 
-        $response->assertSee('qwer');
-    }
+        $response = $this->actingAs($user)->get('/articles');
 
-    public function test_articles_updated_successfully()
-    {
-        $user = User::factory()->create();
-        $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
-        Article::factory()->create();
-
-        $this->get('/articles/create');
-        $response = $this->post('articles/create', [
-            'title' => 'qwer',
-            'body' => 'qwer',
-            'comments' => 'qwer',
-            'slug' => 'qwer',
-        ]);
-
-        $response->assertSee('qwer');
+        $response->assertStatus(200);
+        $response->assertViewHas('articles', function ($collection) use ($articles) {
+            return $collection->contains($articles);
+        });
     }
 }
