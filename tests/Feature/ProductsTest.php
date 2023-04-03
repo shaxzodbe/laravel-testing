@@ -15,19 +15,15 @@ class ProductsTest extends TestCase
 
     public function test_paginated_articles_table_doesnt_contain_11th_record()
     {
+        $products = Product::factory(11)->create();
+        $lastProduct = $products->last();
         $user = User::factory()->create();
 
-        for ($i = 1; $i <= 11; $i++) {
-            $product = Product::create([
-                'name' => 'Product ' . $i,
-                'price' => rand(100, 999)
-            ]);
-        }
         $response = $this->actingAs($user)->get('products');
 
         $response->assertStatus(200);
-        $response->assertViewHas('products', function ($collection) use ($product) {
-            return !$collection->contains($product);
+        $response->assertViewHas('products', function ($collection) use ($lastProduct) {
+            return !$collection->contains($lastProduct);
         });
     }
 }
