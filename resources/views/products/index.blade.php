@@ -30,31 +30,29 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @isset($products)
-                                @forelse($products as $product)
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <td class="px-6 py-4">
-                                            {{ $product->id }}
-                                        </td>
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ $product->name }}
-                                        </th>
-                                        <td class="px-6 py-4">
-                                            {{ number_format($product->price, 2) }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $product->price_eur }}
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <td class="px-6 py-4">
-                                            {{ __("Data does not exist!") }}
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            @endisset
+                            @forelse($products as $product)
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <td class="px-6 py-4">
+                                        {{ $product->id }}
+                                    </td>
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ $product->name }}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {{ number_format($product->price, 2) }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $product->price_eur }}
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <td class="px-6 py-4">
+                                        {{ __("Data does not exist!") }}
+                                    </td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
                         <div class="mt-4">
