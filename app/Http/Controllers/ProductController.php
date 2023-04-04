@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index(): Application|Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
     {
-        $products = Product::paginate(10);
+        $products = Product::paginate(10)   ;
 
         return view('products.index', compact('products'));
     }

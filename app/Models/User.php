@@ -64,13 +64,13 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
-    public function birthDate(): Attribute
-    {
-        return Attribute::make(
-            get: fn($value) => Carbon::createFromFormat('Y-m-d', $value)->format('m/d/Y'),
-            set: fn($value) => Carbon::createFromFormat('m/d/Y', $value)->format('Y-m-d')
-        );
-    }
+//    public function birthDate(): Attribute
+//    {
+//        return Attribute::make(
+//            get: fn($value) => Carbon::createFromFormat('Y-m-d', $value)->format('m/d/Y'),
+//            set: fn($value) => Carbon::createFromFormat('m/d/Y', $value)->format('Y-m-d')
+//        );
+//    }
 
     public function getCreatedDiffAttribute()
     {
@@ -80,5 +80,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeEmail($query, string $email)
     {
         $query->where('email', $email);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
     }
 }

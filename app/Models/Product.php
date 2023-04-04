@@ -16,4 +16,9 @@ class Product extends Model
     {
         return (new CurrencyService())->convert($this->price, 'usd', 'eur');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
