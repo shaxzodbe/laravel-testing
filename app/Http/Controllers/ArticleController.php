@@ -14,8 +14,6 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $users = User::email('kikecepucy@mailinator.com')->get();
-        dd($users);
         $articles = Article::orderBy('updated_at', 'desc')->paginate(10);
 
         return view('articles.index', compact('articles'));

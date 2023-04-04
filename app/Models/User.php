@@ -81,15 +81,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $query->where('email', $email);
     }
-
-    protected static function booted()
-    {
-        self::addGlobalScope('completed', function (Builder $builder) {
-            $builder->where('is_completed', true);
-        });
-
-
-
-    }
-
 }
