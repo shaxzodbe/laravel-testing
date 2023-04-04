@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Enum\ProjectLevel;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Schema\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -24,7 +26,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'email_verified_at'
+        'email_verified_at',
+        'birth_date'
     ];
 
     /**
@@ -61,8 +64,32 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
+    public function birthDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => Carbon::createFromFormat('Y-m-d', $value)->format('m/d/Y'),
+            set: fn($value) => Carbon::createFromFormat('m/d/Y', $value)->format('Y-m-d')
+        );
+    }
+
     public function getCreatedDiffAttribute()
     {
         return $this->created_at->diffForHumans();
     }
+
+    public function scopeEmail($query, string $email)
+    {
+        $query->where('email', $email);
+    }
+
+    protected static function booted()
+    {
+        self::addGlobalScope('completed', function (Builder $builder) {
+            $builder->where('is_completed', true);
+        });
+
+
+
+    }
+
 }
