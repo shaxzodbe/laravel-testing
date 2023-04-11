@@ -19,7 +19,9 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('articles', \App\Http\Controllers\ArticleController::class);
+//    Route::middleware(['adminAccess'], function () {
+        Route::resource('articles', \App\Http\Controllers\ArticleController::class);
+//    });
     Route::resource('products', \App\Http\Controllers\ProductController::class);
 });
 
@@ -33,4 +35,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
