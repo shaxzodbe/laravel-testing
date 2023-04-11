@@ -7,7 +7,9 @@
 
     <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <x-link href="{{ route('articles.create') }}" class="mb-4">Create</x-link>
+            @can('create_article')
+                <x-link href="{{ route('articles.create') }}" class="mb-4">Create</x-link>
+            @endcan
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="relative overflow-x-auto">
@@ -57,16 +59,20 @@
                                            class="visited:text-purple-600">{{ $article->slug }}</a>
                                     </td>
                                     <td class="px-2 py-2">
-                                        <x-link href="{{ route('articles.edit', $article) }}">Edit</x-link>
-                                        <form method="POST" action="{{ route('articles.destroy', $article) }}"
-                                              style="display: inline-block">
-                                            @csrf
-                                            @method('DELETE')
-                                            <x-danger-button
-                                                type="submit"
-                                                onclick="return confirm('Are you sure?')">Delete
-                                            </x-danger-button>
-                                        </form>
+                                        @can('edit_article')
+                                            <x-link href="{{ route('articles.edit', $article) }}">Edit</x-link>
+                                        @endcan
+                                        @can('delete_article')
+                                                <form method="POST" action="{{ route('articles.destroy', $article) }}"
+                                                      style="display: inline-block">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <x-danger-button
+                                                        type="submit"
+                                                        onclick="return confirm('Are you sure?')">Delete
+                                                    </x-danger-button>
+                                                </form>
+                                            @endcan
                                     </td>
                                 </tr>
                             @empty

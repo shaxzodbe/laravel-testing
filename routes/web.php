@@ -18,10 +18,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::middleware(['admin_access'], function () {
+    Route::resource('articles', \App\Http\Controllers\ArticleController::class);
+});
+
 Route::group(['middleware' => 'auth'], function () {
-//    Route::middleware(['adminAccess'], function () {
-        Route::resource('articles', \App\Http\Controllers\ArticleController::class);
-//    });
     Route::resource('products', \App\Http\Controllers\ProductController::class);
 });
 

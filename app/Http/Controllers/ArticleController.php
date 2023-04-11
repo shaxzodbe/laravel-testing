@@ -15,7 +15,6 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::with('user')->paginate(10);
-
         return view('articles.index', compact('articles'));
     }
 
@@ -24,6 +23,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
+        $this->authorize('create_article');
         return view('articles.create');
     }
 
@@ -32,8 +32,8 @@ class ArticleController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        $this->authorize('create_article');
         Article::create($request->validated());
-
         return redirect()->route('articles.index');
     }
 
@@ -50,6 +50,7 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
+        $this->authorize('edit_article');
         return view('articles.edit', compact('article'));
     }
 
@@ -58,8 +59,8 @@ class ArticleController extends Controller
      */
     public function update(UpdateRequest $request, Article $article)
     {
+        $this->authorize('update_article');
         $article->update($request->validated());
-
         return redirect()->route('articles.index');
     }
 
@@ -68,8 +69,8 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        $this->authorize('delete_article');
         $article->delete();
-
         return redirect()->route('articles.index');
     }
 }
